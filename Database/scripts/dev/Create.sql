@@ -78,42 +78,42 @@ CREATE TABLE "Estatus" (
 	PRIMARY KEY("idEstatus")
 );
 
-ALTER TABLE "Plantas"
-ADD FOREIGN KEY("colorPlanta") REFERENCES "ProcesoPlanta"("plantaColor")
-ON UPDATE SET NULL ON DELETE NO ACTION;
-
 ALTER TABLE "Procesos"
-ADD FOREIGN KEY("idProcesos") REFERENCES "ProcesoPlanta"("idProceso")
-ON UPDATE SET NULL ON DELETE NO ACTION;
-
-ALTER TABLE "Dificultad"
-ADD FOREIGN KEY("idDificultad") REFERENCES "Procesos"("idDificultad")
-ON UPDATE SET NULL ON DELETE NO ACTION;
-
-ALTER TABLE "Marca"
-ADD FOREIGN KEY("idMarca") REFERENCES "Maquina"("idMarca")
+ADD FOREIGN KEY("idDificultad") REFERENCES "Dificultad"("idDificultad")
 ON UPDATE NO ACTION ON DELETE NO ACTION;
 
-ALTER TABLE "Maquina"
-ADD FOREIGN KEY("idMaquina") REFERENCES "Asignaciones"("maquinaPrincipal")
+ALTER TABLE "ProcesoPlanta"
+ADD FOREIGN KEY("idProceso") REFERENCES "Procesos"("idProcesos")
 ON UPDATE NO ACTION ON DELETE NO ACTION;
 
-ALTER TABLE "Maquina"
-ADD FOREIGN KEY("idMaquina") REFERENCES "Asignaciones"("maquinaSecundaria")
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE "Tecnico"
-ADD FOREIGN KEY("dni") REFERENCES "Asignaciones"("dniTecnicoi")
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE "Turno"
-ADD FOREIGN KEY("idTurno") REFERENCES "Asignaciones"("idTurno")
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE "Estatus"
-ADD FOREIGN KEY("idEstatus") REFERENCES "Maquina"("idEstatus")
+ALTER TABLE "ProcesoPlanta"
+ADD FOREIGN KEY("plantaColor") REFERENCES "Plantas"("colorPlanta")
 ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 ALTER TABLE "Maquina"
 ADD FOREIGN KEY("idProcesoPlanta") REFERENCES "ProcesoPlanta"("idProcesoPlanta")
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE "Maquina"
+ADD FOREIGN KEY("idMarca") REFERENCES "Marca"("idMarca")
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE "Maquina"
+ADD FOREIGN KEY("idEstatus") REFERENCES "Estatus"("idEstatus")
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE "Asignaciones"
+ADD FOREIGN KEY("maquinaPrincipal") REFERENCES "Maquina"("idMaquina")
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE "Asignaciones"
+ADD FOREIGN KEY("maquinaSecundaria") REFERENCES "Maquina"("idMaquina")
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE "Asignaciones"
+ADD FOREIGN KEY("dniTecnicoi") REFERENCES "Tecnico"("dni")
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE "Asignaciones"
+ADD FOREIGN KEY("idTurno") REFERENCES "Turno"("idTurno")
 ON UPDATE NO ACTION ON DELETE NO ACTION;
