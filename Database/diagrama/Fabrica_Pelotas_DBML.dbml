@@ -1,0 +1,109 @@
+Table Dificultad {
+	idDificultad integer [ pk, increment, not null, unique ]
+	nombreDificultad integer [ not null ]
+}
+
+Table Marca {
+	idMarca integer [ pk, increment, not null, unique ]
+	nombreMarca varchar [ not null ]
+}
+
+Table ProcesoPlanta {
+	idProcesoPlanta integer [ pk, increment, not null, unique ]
+	plantaColor varchar [ not null ]
+	idProceso integer [ not null ]
+}
+
+Table Procesos {
+	idProcesos integer [ pk, not null, unique ]
+	nombreProceso varchar [ not null ]
+	idDificultad integer [ not null ]
+}
+
+Table Plantas {
+	colorPlanta varchar [ pk, not null, unique ]
+	nombrePlanta varchar [ not null ]
+	superficie decimal [ not null ]
+}
+
+Table Tecnico {
+	dni integer [ pk, increment, not null, unique ]
+	nombreTecnico varchar [ not null ]
+	apellidoTecnico1 varchar [ not null ]
+	apellidoTecnico2 varchar [ not null ]
+	fechaNacimiento integer [ not null ]
+	telefonoTecnico1 varchar [ not null ]
+	telefonoTecnico2 varchar
+	telefonoTecnico3 varchar
+}
+
+Table Asignaciones {
+	idAsignacion integer [ pk, increment, not null, unique ]
+	maquinaPrincipal integer [ not null ]
+	maquinaSecundaria integer [ not null ]
+	dniTecnico integer [ not null ]
+	idTurno integer [ not null ]
+	fechaInicio integer [ not null ]
+	fechaFinal integer [ not null ]
+}
+
+Table Maquina {
+	idMaquina integer [ pk, increment, not null, unique ]
+	idMarca integer [ not null ]
+	modeloMaquina varchar [ not null ]
+	noSerie varchar [ not null ]
+	idProcesoPlanta integer [ not null ]
+	idEstatus smallint [ not null ]
+}
+
+Table Turno {
+	idTurno integer [ pk, increment, not null, unique ]
+	nombreTurno varchar [ not null ]
+	horaInicio integer [ not null ]
+	horaFin integer [ not null ]
+}
+
+Table Estatus {
+	idEstatus integer [ pk, increment, not null, unique ]
+	nombreEstatus varchar [ not null ]
+}
+
+Ref fk_Procesos_idDificultad_Dificultad {
+	Procesos.idDificultad > Dificultad.idDificultad [ delete: no action, update: no action ]
+}
+
+Ref fk_ProcesoPlanta_idProceso_Procesos {
+	ProcesoPlanta.idProceso > Procesos.idProcesos [ delete: no action, update: no action ]
+}
+
+Ref fk_ProcesoPlanta_plantaColor_Plantas {
+	ProcesoPlanta.plantaColor > Plantas.colorPlanta [ delete: no action, update: no action ]
+}
+
+Ref fk_Maquina_idProcesoPlanta_ProcesoPlanta {
+	Maquina.idProcesoPlanta > ProcesoPlanta.idProcesoPlanta [ delete: no action, update: no action ]
+}
+
+Ref fk_Maquina_idMarca_Marca {
+	Maquina.idMarca > Marca.idMarca [ delete: no action, update: no action ]
+}
+
+Ref fk_Maquina_idEstatus_Estatus {
+	Maquina.idEstatus > Estatus.idEstatus [ delete: no action, update: no action ]
+}
+
+Ref fk_Asignaciones_maquinaPrincipal_Maquina {
+	Asignaciones.maquinaPrincipal > Maquina.idMaquina [ delete: no action, update: no action ]
+}
+
+Ref fk_Asignaciones_maquinaSecundaria_Maquina {
+	Asignaciones.maquinaSecundaria > Maquina.idMaquina [ delete: no action, update: no action ]
+}
+
+Ref fk_Asignaciones_dniTecnicoi_Tecnico {
+	Asignaciones.dniTecnico > Tecnico.dni [ delete: no action, update: no action ]
+}
+
+Ref fk_Asignaciones_idTurno_Turno {
+	Asignaciones.idTurno > Turno.idTurno [ delete: no action, update: no action ]
+}
